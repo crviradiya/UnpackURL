@@ -1,92 +1,60 @@
 # UnpackURL
 
-**UnpackURL** is a free, developer-friendly tool that makes it easy to parse, explore, and edit complex URLs—including deeply nested query parameters—without pain.
+A modern web application for analyzing and unpacking URLs, built with Next.js 14, TypeScript, and Supabase.
 
-🛠 Built for developers, QA engineers, and anyone handling tricky URLs.
+## Features
 
----
+- URL analysis and unpacking
+- Modern, responsive UI with Tailwind CSS
+- Type-safe development with TypeScript
+- Real-time data with Supabase
+- Analytics integration with Tinybird
 
-## 🔗 Try it out
+## Tech Stack
 
-👉 Coming soon at [unpackurl.com](https://unpackurl.com)
+- **Frontend:**
+  - Next.js 14 (App Router)
+  - TypeScript
+  - Tailwind CSS
+  - shadcn/ui components
+  - Framer Motion
 
----
+- **Backend:**
+  - Supabase
+  - Tinybird Analytics
 
-## 🚀 Features
+## Getting Started
 
-- 🧩 Parse any URL and display its query parameters in a structured way
-- 📝 Edit any query param and get the updated URL instantly
-- 🔍 Auto-decode nested query strings (like `verification_url`)
-- ⚠️ Input validation and suggestions for fixing malformed URLs
-- 💡 Tooltips and in-line docs to help users understand parameter usage
-- 📋 Copy-ready output with one click
-- 🔄 Support for decoding, encoding, and flattening URLs
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Copy `.env.example` to `.env.local` and fill in your environment variables
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
----
+## Project Structure
 
-## 🔧 Use Cases
+```
+src/
+├── app/              # Next.js app router pages
+├── components/       # React components
+│   └── ui/          # Reusable UI components
+├── lib/             # Utility functions and configurations
+└── types/           # TypeScript type definitions
+```
 
-- Quickly debug OAuth/callback URLs
-- Share cleaned-up URLs with team members
-- Validate deeply nested invite links or redirect chains
-- Edit email verification links for testing
+## Development
 
----
+- Follow TypeScript best practices
+- Use Tailwind CSS for styling
+- Implement proper error handling
+- Write clean, maintainable code
+- Follow the project's coding standards
 
-## 📦 Planned Features (Post-MVP)
-
-- 📂 Save + share URL snapshots
-- 🔗 Chrome extension for in-browser editing
-- 🧪 Deep validation of URLs (e.g., valid token format, domains)
-- 🎨 Dark mode, mobile-first experience
-- 📈 Tinybird-based analytics for query trends (privacy-first)
-
----
-
-## 🛠 Tech Stack
-
-- [Next.js](https://nextjs.org/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [shadcn/ui](https://ui.shadcn.dev/)
-- [Prisma](https://www.prisma.io/)
-- [PostgreSQL](https://www.postgresql.org/)
-- [Tinybird](https://www.tinybird.co/) (for optional analytics)
-- [Resend](https://resend.com/) (for email features)
-- [Vercel](https://vercel.com/) (deployment)
-
----
-
-## 🧠 Naming & SEO Strategy
-
-The name **UnpackURL** was chosen for clarity, simplicity, and search relevance.
-Search terms we aim to rank for include:
-
-- *"decode URL online"*
-- *"edit query params online"*
-- *"view nested query string"*
-- *"URL unpacker"*
-
----
-
-## 📸 Screenshots
-
-*Coming soon...*
-
----
-
-## 🤝 Contributing
-
-We're planning to open-source this tool. Contributions welcome in future!
-
----
-
-## 🧑‍💻 Created by
-
-[Chirag Viradiya and Ashish Viradiya] — with love for clean URLs and smoother debugging.
-
----
-
-## 📄 License
+## License
 
 MIT

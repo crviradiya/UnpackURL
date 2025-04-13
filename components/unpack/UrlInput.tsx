@@ -1,0 +1,189 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
+import { RefreshCw, Copy, ArrowRight, Code } from "lucide-react";
+import { UrlAnalysis } from "@/types";
+import { parseUrl, reconstructUrl } from "@/lib/urlUtils";
+import { urlSchema } from "@/lib/validators";
+import { toast } from "sonner";
+
+interface UrlInputProps {
+  initialUrl?: string;
+  onAnalysisChange: (analysis: UrlAnalysis) => void;
+  onCopyUrl: () => void;
+  onReset: () => void;
+  isLoading: boolean;
+  reconstructedUrl: string;
+}
+
+export function UrlInput({
+  initialUrl = "",
+  onAnalysisChange,
+  onCopyUrl,
+  onReset,
+  isLoading,
+  reconstructedUrl,
+}: UrlInputProps) {
+  const [url, setUrl] = useState(initialUrl);
+  const [isEncoded, setIsEncoded] = useState(false);
+  const [displayedUrl, setDisplayedUrl] = useState(reconstructedUrl);
+
+  // Update displayed URL when reconstructedUrl changes
+  useEffect(() => {
+    if (!isEncoded) {
+      setDisplayedUrl(reconstructedUrl);
+    }
+  }, [reconstructedUrl, isEncoded]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleUrlAnalysis(url);
+  };
+
+  const handleUrlAnalysis = (inputUrl: string) => {
+    try {
+      // Validate URL
+      urlSchema.parse({ url: inputUrl });
+
+      // Parse URL
+      const result = parseUrl(inputUrl);
+      onAnalysisChange(result);
+
+      // Update URL hash for sharing
+      window.location.hash = encodeURIComponent(inputUrl);
+      
+      // Reset encoded state when analyzing a new URL
+      setIsEncoded(false);
+    } catch (error) {
+      toast.error("Please enter a valid URL");
+    }
+  };
+
+  const handleEncodeDecode = () => {
+    try {
+      if (isEncoded) {
+        // If currently encoded, decode
+        setDisplayedUrl(reconstructedUrl);
+        toast.success('URL Decoded');
+      } else {
+        // If currently decoded, encode
+        const encodedUrl = encodeURIComponent(reconstructedUrl);
+        setDisplayedUrl(encodedUrl);
+        toast.success('URL Encoded');
+      }
+      setIsEncoded(!isEncoded);
+    } catch (error) {
+      toast.error('Invalid URL', {
+        description: 'Could not encode/decode the URL'
+      });
+    }
+  };
+
+  const handleReset = () => {
+    // Keep the current URL in the input
+    const currentUrl = url;
+    
+    // Reset encoded state
+    setIsEncoded(false);
+    
+    // Call parent's onReset function
+    onReset();
+    
+    // If there's a URL in the input, re-analyze it to update the reconstructed URL
+    if (currentUrl.trim()) {
+      try {
+        // Re-parse the URL to update the reconstructed version
+        const result = parseUrl(currentUrl);
+        onAnalysisChange(result);
+        
+        // Update displayed URL to match the newly reconstructed URL
+        setDisplayedUrl(reconstructUrl(result));
+        
+        toast.success('URL components reset');
+      } catch (error) {
+        // If invalid URL, just clear everything
+        setUrl("");
+        toast.error('Invalid URL, cleared input');
+      }
+    } else {
+      // If no URL, show a different message
+      toast.success('URL Reset');
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      <form onSubmit={handleSubmit} className="flex gap-2">
+        <div className="flex-1 relative">
+          <Input
+            type="url"
+            placeholder="Enter URL to analyze (e.g., https://example.com?param1=value1)"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            className="pr-24 bg-white dark:bg-slate-800"
+            disabled={isLoading}
+          />
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="absolute right-1 top-1 bottom-1"
+            size="sm"
+          >
+            {isLoading ? (
+              <RefreshCw className="h-4 w-4 animate-spin" />
+            ) : (
+              <>
+                <span>Analyze</span>
+                <ArrowRight className="h-4 w-4 ml-1" />
+              </>
+            )}
+          </Button>
+        </div>
+      </form>
+
+      {reconstructedUrl && (
+        <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-4">
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-sm font-medium text-slate-700 dark:text-slate-300">
+              Reconstructed URL
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleEncodeDecode}
+                className="flex items-center gap-1"
+              >
+                <Code className="h-4 w-4" />
+                {isEncoded ? 'Decode' : 'Encode'}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleReset}
+                className="flex items-center gap-1"
+              >
+                <RefreshCw className="h-4 w-4" />
+                Reset
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onCopyUrl}
+                className="flex items-center gap-1"
+              >
+                <Copy className="h-4 w-4" />
+                Copy
+              </Button>
+            </div>
+          </div>
+          <div className="font-mono text-sm p-3 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-700 break-all">
+            {displayedUrl}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
