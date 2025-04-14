@@ -1,64 +1,84 @@
 "use client";
 
-import { useState } from "react";
-import { Plus, Minus, X } from "lucide-react";
+import { useState, useEffect, ReactNode } from "react";
+import { ChevronDown } from "lucide-react";
+import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-interface CollapsibleSectionProps {
-  title: string;
-  children: React.ReactNode;
-  defaultCollapsed?: boolean;
+export interface CollapsibleSectionProps {
+  children: ReactNode;
+  title?: string;
   className?: string;
-  onClose?: () => void;
   showClose?: boolean;
+  onClose?: () => void;
+  defaultCollapsed?: boolean;
+  onCollapseChange?: (isCollapsed: boolean) => void;
 }
 
 export function CollapsibleSection({
-  title,
   children,
-  defaultCollapsed = false,
-  className,
-  onClose,
+  title,
+  className = "",
   showClose = false,
+  onClose,
+  defaultCollapsed = false,
+  onCollapseChange,
 }: CollapsibleSectionProps) {
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
 
+  useEffect(() => {
+    if (onCollapseChange) {
+      onCollapseChange(isCollapsed);
+    }
+  }, [isCollapsed, onCollapseChange]);
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
   return (
     <div className={cn(
-      "border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden bg-white dark:bg-slate-900 shadow-sm",
+      "rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden",
       className
     )}>
-      <div className="flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-slate-800/50">
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-            aria-expanded={!isCollapsed}
-          >
-            {isCollapsed ? (
-              <Plus className="h-4 w-4 text-slate-600 dark:text-slate-400" />
-            ) : (
-              <Minus className="h-4 w-4 text-slate-600 dark:text-slate-400" />
-            )}
-          </button>
-          <span className="font-medium text-slate-900 dark:text-slate-100">{title}</span>
-        </div>
-        {showClose && onClose && (
-          <button
-            type="button"
-            onClick={onClose}
-            className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-          >
-            <X className="h-4 w-4 text-slate-500 dark:text-slate-400" />
-          </button>
+      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800">
+        {title && (
+          <h3 className="text-sm font-medium text-slate-900 dark:text-slate-100">
+            {title}
+          </h3>
         )}
+        <div className="flex items-center gap-2 ml-auto">
+          {showClose && onClose && (
+            <button
+              onClick={onClose}
+              className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          )}
+          <button
+            onClick={toggleCollapse}
+            className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700"
+          >
+            <ChevronDown
+              className={cn(
+                "h-4 w-4 transition-transform duration-200",
+                isCollapsed ? "rotate-0" : "rotate-180"
+              )}
+            />
+          </button>
+        </div>
       </div>
-      {!isCollapsed && (
-        <div className="p-4 bg-white dark:bg-slate-900">
+      <div
+        className={cn(
+          "transition-all duration-200 overflow-hidden",
+          isCollapsed ? "max-h-0" : "max-h-[5000px]"
+        )}
+      >
+        <div className="p-4 bg-white dark:bg-slate-800">
           {children}
         </div>
-      )}
+      </div>
     </div>
   );
 } 

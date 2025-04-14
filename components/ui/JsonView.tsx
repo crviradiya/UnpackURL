@@ -11,9 +11,10 @@ interface JsonViewProps {
   analysis: UrlAnalysis;
   className?: string;
   isInSidePanel?: boolean;
+  defaultCollapsed?: boolean;
 }
 
-export function JsonView({ analysis, className, isInSidePanel }: JsonViewProps) {
+export function JsonView({ analysis, className, isInSidePanel, defaultCollapsed = false }: JsonViewProps) {
   const jsonData = {
     protocol: analysis.parsedUrl.protocol,
     host: analysis.parsedUrl.hostname,
@@ -23,6 +24,7 @@ export function JsonView({ analysis, className, isInSidePanel }: JsonViewProps) 
   };
 
   const [copied, setCopied] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
 
   const handleCopy = async () => {
     try {
@@ -46,9 +48,11 @@ export function JsonView({ analysis, className, isInSidePanel }: JsonViewProps) 
         title="JSON Representation" 
         className={cn(
           "border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-900/20",
-          isInSidePanel && "min-h-[560px]",
+          isInSidePanel && "min-h-[400px]",
           className
         )}
+        defaultCollapsed={defaultCollapsed}
+        onCollapseChange={(collapsed) => setIsCollapsed(collapsed)}
       >
         <div className="relative h-full">
           <button
@@ -63,7 +67,7 @@ export function JsonView({ analysis, className, isInSidePanel }: JsonViewProps) 
           </button>
           <pre className={cn(
             "bg-white dark:bg-slate-800 p-4 rounded-md overflow-auto text-sm font-mono text-slate-900 dark:text-slate-100 shadow-inner",
-            isInSidePanel && "min-h-[560px] max-h-[calc(100vh-300px)]"
+            isInSidePanel && "min-h-[400px] max-h-[calc(100vh-300px)]"
           )}>
             {JSON.stringify(jsonData, null, 2)}
           </pre>
