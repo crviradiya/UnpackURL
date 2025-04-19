@@ -2,14 +2,12 @@
 
 import React from "react";
 import { UrlAnalysis } from "@/types";
-import { CollapsibleSection } from "@/components/ui/CollapsibleSection";
 
 interface JsonViewProps {
   analysis: UrlAnalysis;
-  className?: string;
 }
 
-export function JsonView({ analysis, className }: JsonViewProps) {
+export function JsonView({ analysis }: JsonViewProps) {
   const jsonData = {
     protocol: analysis.parsedUrl.protocol,
     host: analysis.parsedUrl.hostname,
@@ -18,13 +16,13 @@ export function JsonView({ analysis, className }: JsonViewProps) {
     query: analysis.parameters,
   };
 
-  const renderJsonValue = (value: any, indent: number = 0): React.ReactNode => {
+  const renderJsonValue = (value: unknown, indent: number = 0): React.ReactNode => {
     if (value === null || value === undefined) {
       return <span className="text-slate-500">null</span>;
     }
 
     if (typeof value === 'string') {
-      return <span className="text-green-400">"{value}"</span>;
+      return <span className="text-green-400">&quot;{value}&quot;</span>;
     }
 
     if (typeof value === 'number' || typeof value === 'boolean') {
@@ -50,7 +48,7 @@ export function JsonView({ analysis, className }: JsonViewProps) {
     }
 
     if (typeof value === 'object') {
-      const entries = Object.entries(value);
+      const entries = Object.entries(value as Record<string, unknown>);
       if (entries.length === 0) return <span>{"{}"}</span>;
       return (
         <span>
@@ -58,7 +56,7 @@ export function JsonView({ analysis, className }: JsonViewProps) {
           <div style={{ marginLeft: `${indent + 2}rem` }}>
             {entries.map(([key, val], i) => (
               <div key={key}>
-                <span className="text-red-400">"{key}"</span>: {renderJsonValue(val, indent + 2)}
+                <span className="text-red-400">&quot;{key}&quot;</span>: {renderJsonValue(val, indent + 2)}
                 {i < entries.length - 1 && ","}
               </div>
             ))}

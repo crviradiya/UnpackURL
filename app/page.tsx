@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { UrlParser } from "@/components/unpack/UrlParser";
-import { siteConfig } from "@/constants/site";
 import { FAQJsonLd, HowToJsonLd } from './JsonLd';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';

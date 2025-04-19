@@ -10,7 +10,7 @@ export function parseUrl(url: string): UrlAnalysis {
 
     // Extract port from hostname if present
     let port = "";
-    let hostname = parsedUrl.hostname;
+    const hostname = parsedUrl.hostname;
     
     if (parsedUrl.port) {
       port = parsedUrl.port;
@@ -34,7 +34,7 @@ export function parseUrl(url: string): UrlAnalysis {
       isValid: true,
       timestamp: new Date().toISOString(),
     };
-  } catch (error) {
+  } catch {
     return {
       originalUrl: url,
       parsedUrl: {

@@ -2,7 +2,7 @@ import React from 'react';
 
 interface JsonLdProps {
   type: 'WebApplication' | 'FAQPage' | 'BreadcrumbList' | 'HowTo';
-  data: any;
+  data: Record<string, unknown>;
 }
 
 export default function JsonLd({ type, data }: JsonLdProps) {

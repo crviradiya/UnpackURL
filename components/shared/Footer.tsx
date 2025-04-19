@@ -9,23 +9,15 @@ export function Footer() {
           <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
             Built by{" "}
             <Link
-              href={siteConfig.links.github}
+              href={siteConfig.author.url}
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
             >
-              {siteConfig.name}
+              {siteConfig.author.name}
             </Link>
-            . The source code is available on{" "}
-            <Link
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noreferrer"
-              className="font-medium underline underline-offset-4"
-            >
-              GitHub
-            </Link>
-            .
+            {" • "}
+            <span className="font-medium">© {new Date().getFullYear()} All Rights Reserved</span>
           </p>
         </div>
       </div>

@@ -11,14 +11,6 @@ export function Navbar() {
         </Link>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-2">
-            <Link
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noreferrer"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-            >
-              GitHub
-            </Link>
             <ThemeToggleClient />
           </nav>
         </div>

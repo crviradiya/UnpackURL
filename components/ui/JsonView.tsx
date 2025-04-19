@@ -5,9 +5,9 @@ import { formatJson } from "@/lib/utils";
 import { CopyButton } from "@/components/ui/CopyButton";
 
 interface JsonViewProps {
-  data: any;
+  data: Record<string, unknown>;
   isEditable?: boolean;
-  onChange?: (data: any) => void;
+  onChange?: (data: Record<string, unknown>) => void;
   readOnly?: boolean;
   className?: string;
 }
@@ -34,14 +34,14 @@ export function JsonView({
     
     try {
       // Try to parse the JSON to validate it
-      const parsed = JSON.parse(value);
+      const parsed = JSON.parse(value) as Record<string, unknown>;
       setIsValid(true);
       
       // Call the onChange callback if provided
       if (onChange) {
         onChange(parsed);
       }
-    } catch (error) {
+    } catch {
       setIsValid(false);
     }
   };

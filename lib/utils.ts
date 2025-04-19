@@ -61,7 +61,7 @@ export function formatUrl(url: string, maxLength: number = 50): string {
  * @param obj Object to format as JSON
  * @returns Formatted JSON string
  */
-export function formatJson(obj: any): string {
+export function formatJson(obj: Record<string, unknown>): string {
   try {
     return JSON.stringify(obj, null, 2);
   } catch (error) {
