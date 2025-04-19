@@ -84,7 +84,6 @@ export function UrlComparison({
           <UrlInput
             initialUrl={left?.originalUrl || ""}
             onAnalysisChange={handleLeftAnalysisChange}
-            onCopyUrl={handleCopyLeftUrl}
             onReset={handleResetLeft}
             isLoading={isLoading}
             reconstructedUrl={left ? reconstructUrl(left) : ""}
@@ -122,7 +121,6 @@ export function UrlComparison({
           <UrlInput
             initialUrl={right?.originalUrl || ""}
             onAnalysisChange={handleRightAnalysisChange}
-            onCopyUrl={handleCopyRightUrl}
             onReset={handleResetRight}
             isLoading={isLoading}
             reconstructedUrl={right ? reconstructUrl(right) : ""}

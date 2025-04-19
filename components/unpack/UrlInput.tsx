@@ -13,7 +13,6 @@ import { CopyButton } from "@/components/ui/CopyButton";
 interface UrlInputProps {
   initialUrl?: string;
   onAnalysisChange: (analysis: UrlAnalysis) => void;
-  onCopyUrl: () => void;
   onReset: () => void;
   isLoading: boolean;
   reconstructedUrl: string;
@@ -22,7 +21,6 @@ interface UrlInputProps {
 export function UrlInput({
   initialUrl = "",
   onAnalysisChange,
-  onCopyUrl,
   onReset,
   isLoading,
   reconstructedUrl,
@@ -57,7 +55,7 @@ export function UrlInput({
       
       // Reset encoded state when analyzing a new URL
       setIsEncoded(false);
-    } catch (error) {
+    } catch (_) {
       toast.error("Please enter a valid URL");
     }
   };
@@ -75,7 +73,7 @@ export function UrlInput({
         toast.success('URL Encoded');
       }
       setIsEncoded(!isEncoded);
-    } catch (error) {
+    } catch (_) {
       toast.error('Invalid URL', {
         description: 'Could not encode/decode the URL'
       });
@@ -103,7 +101,7 @@ export function UrlInput({
         setDisplayedUrl(reconstructUrl(result));
         
         toast.success('URL components reset');
-      } catch (error) {
+      } catch (_) {
         // If invalid URL, just clear everything
         setUrl("");
         toast.error('Invalid URL, cleared input');

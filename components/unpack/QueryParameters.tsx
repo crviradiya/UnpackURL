@@ -3,12 +3,11 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { Minus, Plus, X, Link, ChevronDown, ChevronRight } from "lucide-react";
+import { Plus, X, Link, ChevronDown, ChevronRight } from "lucide-react";
 import { UrlAnalysis } from "@/types";
 import { cn } from "@/lib/utils";
 import { parseUrl, reconstructUrl } from "@/lib/urlUtils";
 import { JsonView } from "@/components/ui/JsonView";
-import { toast } from "sonner";
 
 interface QueryParametersProps {
   analysis: UrlAnalysis;
@@ -54,7 +53,7 @@ export function QueryParameters({
       // Try to parse it as a URL
       new URL(value.startsWith("www.") ? `http://${value}` : value);
       return true;
-    } catch (e) {
+    } catch (_) {
       return false;
     }
   };
@@ -64,7 +63,7 @@ export function QueryParameters({
     try {
       const url = value.startsWith("www.") ? `http://${value}` : value;
       return parseUrl(url);
-    } catch (e) {
+    } catch (_) {
       return null;
     }
   };

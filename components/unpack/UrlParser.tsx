@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { UrlAnalysis, UrlComparison, ViewMode } from "@/types";
 import { parseUrl } from "@/lib/urlUtils";
 import { trackUrlAnalysis } from "@/lib/analytics";
@@ -19,20 +19,8 @@ export function UrlParser() {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    // Check if there's a URL in the hash
-    const hash = window.location.hash.slice(1);
-    if (hash) {
-      try {
-        const decodedUrl = decodeURIComponent(hash);
-        handleUrlAnalysis(decodedUrl);
-      } catch (error) {
-        console.error("Error decoding URL from hash:", error);
-      }
-    }
-  }, []);
-
-  const handleUrlAnalysis = (inputUrl: string) => {
+  // Use useCallback to memoize the handleUrlAnalysis function
+  const handleUrlAnalysis = useCallback((inputUrl: string) => {
     setIsLoading(true);
     try {
       // Validate URL
@@ -74,7 +62,20 @@ export function UrlParser() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [mode, comparison]);
+
+  useEffect(() => {
+    // Check if there's a URL in the hash
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      try {
+        const decodedUrl = decodeURIComponent(hash);
+        handleUrlAnalysis(decodedUrl);
+      } catch (error) {
+        console.error("Error decoding URL from hash:", error);
+      }
+    }
+  }, [handleUrlAnalysis]);
 
   const handleAnalysisChange = (updatedAnalysis: UrlAnalysis) => {
     setAnalysis(updatedAnalysis);
@@ -96,18 +97,6 @@ export function UrlParser() {
       setAnalysis(comparison.left);
     }
     setMode(newMode);
-  };
-
-  const handleReset = () => {
-    if (mode === "single") {
-      setAnalysis(null);
-    } else {
-      setComparison({
-        left: null,
-        right: null
-      });
-    }
-    window.location.hash = "";
   };
 
   return (

@@ -52,7 +52,7 @@ export default function AboutPage() {
           <ul>
             <li>
               <strong>Complete URL Component Breakdown</strong>
-              {` - We don't just decode query parameters; we break down the entire URL 
+              {` - We don&apos;t just decode query parameters; we break down the entire URL 
               structure for full visibility.`}
             </li>
             <li>
@@ -103,7 +103,7 @@ export default function AboutPage() {
 
           <h2>Future Roadmap</h2>
           <p>
-            We're constantly working to improve UnpackURL with new features and
+            We&apos;re constantly working to improve UnpackURL with new features and
             enhancements. Some upcoming additions include:
           </p>
 

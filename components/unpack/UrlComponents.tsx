@@ -1,8 +1,8 @@
 "use client";
 
-import { UrlAnalysis, UrlComponent } from "@/types";
+import { UrlAnalysis } from "@/types";
 import { Input } from "@/components/ui/Input";
-import { Minus, Plus, X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -67,7 +67,7 @@ export function UrlComponents({ analysis, onUpdate }: UrlComponentsProps) {
         <div className="absolute left-3 -top-8 bottom-0 w-px bg-slate-200 dark:bg-slate-700" />
         
         <div className="space-y-6">
-          {components.map((component, index) => (
+          {components.map((component) => (
             <div key={component.key} className="relative">
               {/* Horizontal line */}
               <div className="absolute left-[-20px] top-[10px] w-5 h-px bg-slate-200 dark:bg-slate-700" />

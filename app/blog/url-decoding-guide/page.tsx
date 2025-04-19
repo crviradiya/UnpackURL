@@ -38,13 +38,13 @@ export default function UrlDecodingGuidePage() {
         <div className="prose prose-lg dark:prose-invert max-w-none">
           <p>
             Understanding how URLs work is essential for web developers, digital marketers, and anyone working with web technologies. 
-            In this comprehensive guide, we'll explore everything you need to know about URL decoding, from basic structure to complex 
+            In this comprehensive guide, we&apos;ll explore everything you need to know about URL decoding, from basic structure to complex 
             parameter manipulation.
           </p>
           
           <h2 id="url-structure">Understanding URL Structure</h2>
           <p>
-            Before diving into decoding, it's important to understand the components that make up a URL. A standard URL consists of:
+            Before diving into decoding, it&apos;s important to understand the components that make up a URL. A standard URL consists of:
           </p>
           
           <ul>
@@ -165,7 +165,7 @@ print(encoded)  # "hello%20world"`}</code></pre>
           
           <h3>Character Encoding Mismatches</h3>
           <p>
-            URLs should be encoded using UTF-8, but sometimes you'll encounter URLs encoded with different character sets. 
+            URLs should be encoded using UTF-8, but sometimes you&apos;ll encounter URLs encoded with different character sets. 
             Be prepared to handle these edge cases in your decoding logic.
           </p>
           
@@ -179,7 +179,7 @@ print(encoded)  # "hello%20world"`}</code></pre>
           <p>
             URL decoding is both a science and an art. While the basic principles are straightforward, real-world URLs often 
             present complex challenges that require careful handling. By understanding URL structure, mastering encoding/decoding 
-            techniques, and following best practices, you'll be well-equipped to work with even the most complex URLs.
+            techniques, and following best practices, you&apos;ll be well-equipped to work with even the most complex URLs.
           </p>
           
           <p>
@@ -189,7 +189,7 @@ print(encoded)  # "hello%20world"`}</code></pre>
           
           <div className="mt-12 not-prose">
             <Link href="/">
-              <Button>Try UnpackURL's Advanced URL Decoder</Button>
+              <Button>Try UnpackURL&apos;s Advanced URL Decoder</Button>
             </Link>
           </div>
         </div>

@@ -9,7 +9,6 @@ import { JsonView } from "@/components/ui/JsonView";
 import { reconstructUrl } from "@/lib/urlUtils";
 import { copyToClipboard } from "@/lib/utils";
 import { toast } from "sonner";
-import { CopyButton } from "@/components/ui/CopyButton";
 
 interface SingleUrlViewProps {
   analysis: UrlAnalysis | null;
@@ -17,12 +16,14 @@ interface SingleUrlViewProps {
   isLoading: boolean;
 }
 
+// Define JSON data shape without using a custom type to match JsonView's expectations
+type JsonData = Record<string, unknown>;
+
 export function SingleUrlView({ 
   analysis, 
   onAnalysisChange, 
   isLoading 
 }: SingleUrlViewProps) {
-  const [jsonData, setJsonData] = useState<any>(null);
   
   const handleCopyUrl = async () => {
     if (!analysis) return;
@@ -41,7 +42,7 @@ export function SingleUrlView({
     // This is handled by the parent component
   };
   
-  const prepareJsonData = (analysis: UrlAnalysis | null) => {
+  const prepareJsonData = (analysis: UrlAnalysis | null): JsonData | null => {
     if (!analysis) return null;
     
     return {
@@ -53,9 +54,7 @@ export function SingleUrlView({
     };
   };
   
-  const handleJsonChange = (newData: any) => {
-    setJsonData(newData);
-    
+  const handleJsonChange = (newData: JsonData) => {
     // If we have valid JSON data and it has the expected structure,
     // try to update the analysis
     if (newData && analysis) {
@@ -67,14 +66,14 @@ export function SingleUrlView({
         };
         
         // Update the parsed URL components if they exist in the JSON
-        if (newData.protocol !== undefined) updatedAnalysis.parsedUrl.protocol = newData.protocol;
-        if (newData.host !== undefined) updatedAnalysis.parsedUrl.hostname = newData.host;
-        if (newData.port !== undefined) updatedAnalysis.parsedUrl.port = newData.port;
-        if (newData.path !== undefined) updatedAnalysis.parsedUrl.pathname = newData.path;
+        if (typeof newData.protocol === 'string') updatedAnalysis.parsedUrl.protocol = newData.protocol;
+        if (typeof newData.host === 'string') updatedAnalysis.parsedUrl.hostname = newData.host;
+        if (typeof newData.port === 'string') updatedAnalysis.parsedUrl.port = newData.port;
+        if (typeof newData.path === 'string') updatedAnalysis.parsedUrl.pathname = newData.path;
         
         // Update query parameters if they exist, ensuring proper deep update
-        if (newData.query !== undefined) {
-          updatedAnalysis.parameters = { ...newData.query };
+        if (newData.query && typeof newData.query === 'object') {
+          updatedAnalysis.parameters = { ...newData.query as Record<string, string> };
           
           // Ensure proper flags are set to trigger UI updates
           updatedAnalysis.isValid = true;
@@ -94,7 +93,7 @@ export function SingleUrlView({
   };
   
   // Prepare JSON data whenever analysis changes
-  const jsonViewData = prepareJsonData(analysis);
+  const jsonViewData = prepareJsonData(analysis) || {}; // Provide fallback empty object
   
   return (
     <div className="grid grid-cols-1 lg:grid-cols-7 gap-6">
@@ -103,7 +102,6 @@ export function SingleUrlView({
           <UrlInput
             initialUrl={analysis?.originalUrl || ""}
             onAnalysisChange={onAnalysisChange}
-            onCopyUrl={handleCopyUrl}
             onReset={handleReset}
             isLoading={isLoading}
             reconstructedUrl={analysis ? reconstructUrl(analysis) : ""}
