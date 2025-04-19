@@ -3,11 +3,12 @@
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { RefreshCw, Copy, ArrowRight, Code } from "lucide-react";
+import { RefreshCw, ArrowRight, Code } from "lucide-react";
 import { UrlAnalysis } from "@/types";
 import { parseUrl, reconstructUrl } from "@/lib/urlUtils";
 import { urlSchema } from "@/lib/validators";
 import { toast } from "sonner";
+import { CopyButton } from "@/components/ui/CopyButton";
 
 interface UrlInputProps {
   initialUrl?: string;
@@ -122,13 +123,13 @@ export function UrlInput({
             placeholder="Enter URL to analyze (e.g., https://example.com?param1=value1)"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className="pr-24 bg-white dark:bg-slate-800"
+            className="pr-24"
             disabled={isLoading}
           />
           <Button
             type="submit"
             disabled={isLoading}
-            className="absolute right-1 top-1 bottom-1"
+            className="absolute right-1 top-1 bottom-1 btn-premium"
             size="sm"
           >
             {isLoading ? (
@@ -144,10 +145,10 @@ export function UrlInput({
       </form>
 
       {reconstructedUrl && (
-        <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-4">
-          <div className="flex items-center justify-between mb-2">
-            <div className="text-sm font-medium text-slate-700 dark:text-slate-300">
-              Reconstructed URL
+        <div className="card">
+          <div className="flex items-center justify-between mb-3">
+            <div className="text-sm font-medium">
+              {isEncoded ? "Encoded URL" : "Reconstructed URL"}
             </div>
             <div className="flex gap-2">
               <Button
@@ -168,18 +169,15 @@ export function UrlInput({
                 <RefreshCw className="h-4 w-4" />
                 Reset
               </Button>
-              <Button
-                variant="outline"
+              <CopyButton
+                text={displayedUrl}
                 size="sm"
-                onClick={onCopyUrl}
-                className="flex items-center gap-1"
-              >
-                <Copy className="h-4 w-4" />
-                Copy
-              </Button>
+                variant="outline"
+                label="Copy"
+              />
             </div>
           </div>
-          <div className="font-mono text-sm p-3 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-700 break-all">
+          <div className="font-mono text-sm p-3 bg-background rounded border border-border break-all">
             {displayedUrl}
           </div>
         </div>

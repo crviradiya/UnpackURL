@@ -1,78 +1,92 @@
 "use client";
 
-import { UrlAnalysis } from "@/types";
-import { CollapsibleSection } from "./CollapsibleSection";
-import { Copy, Check } from "lucide-react";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { toast } from "sonner";
+import { useState, useRef, useEffect } from "react";
+import { formatJson } from "@/lib/utils";
+import { CopyButton } from "@/components/ui/CopyButton";
 
 interface JsonViewProps {
-  analysis: UrlAnalysis;
+  data: any;
+  isEditable?: boolean;
+  onChange?: (data: any) => void;
+  readOnly?: boolean;
   className?: string;
-  isInSidePanel?: boolean;
-  defaultCollapsed?: boolean;
 }
 
-export function JsonView({ analysis, className, isInSidePanel, defaultCollapsed = false }: JsonViewProps) {
-  const jsonData = {
-    protocol: analysis.parsedUrl.protocol,
-    host: analysis.parsedUrl.hostname,
-    port: analysis.parsedUrl.port,
-    path: analysis.parsedUrl.pathname,
-    query: analysis.parameters,
-  };
+export function JsonView({ 
+  data, 
+  isEditable = false, 
+  onChange, 
+  readOnly = false,
+  className = ""
+}: JsonViewProps) {
+  const [jsonString, setJsonString] = useState<string>(formatJson(data));
+  const [isValid, setIsValid] = useState<boolean>(true);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const [copied, setCopied] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
+  useEffect(() => {
+    // Update the JSON string when the data prop changes
+    setJsonString(formatJson(data));
+  }, [data]);
 
-  const handleCopy = async () => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setJsonString(value);
+    
     try {
-      await navigator.clipboard.writeText(JSON.stringify(jsonData, null, 2));
-      setCopied(true);
-      toast.success('Copied to clipboard', {
-        description: 'JSON data has been copied successfully',
-      });
-      setTimeout(() => setCopied(false), 2000);
+      // Try to parse the JSON to validate it
+      const parsed = JSON.parse(value);
+      setIsValid(true);
+      
+      // Call the onChange callback if provided
+      if (onChange) {
+        onChange(parsed);
+      }
     } catch (error) {
-      toast.error('Failed to copy', {
-        description: 'Could not copy JSON data to clipboard',
-      });
+      setIsValid(false);
     }
   };
 
+  // Auto-resize textarea
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "0px";
+      const scrollHeight = textareaRef.current.scrollHeight;
+      textareaRef.current.style.height = scrollHeight + "px";
+    }
+  }, [jsonString]);
+
   return (
-    <div className="space-y-3">
-      <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">JSON View</h3>
-      <CollapsibleSection 
-        title="JSON Representation" 
-        className={cn(
-          "border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-900/20",
-          isInSidePanel && "min-h-[400px]",
-          className
+    <div className={`relative ${className}`}>
+      <div className="flex justify-between items-center mb-2">
+        <span className="text-sm font-medium text-muted-foreground">
+          {isEditable ? "JSON (Editable)" : "JSON"}
+          {!isValid && isEditable && (
+            <span className="ml-2 text-destructive">Invalid JSON</span>
+          )}
+        </span>
+        <CopyButton 
+          text={jsonString} 
+          size="sm" 
+          variant="ghost" 
+          label="Copy JSON"
+        />
+      </div>
+      
+      <div className={`json-view relative ${!isValid && isEditable ? 'border-destructive' : ''}`}>
+        {isEditable ? (
+          <textarea
+            ref={textareaRef}
+            value={jsonString}
+            onChange={handleChange}
+            className="w-full bg-transparent resize-none font-mono text-sm p-0 border-0 focus:ring-0 focus:outline-none"
+            rows={jsonString.split('\n').length}
+            spellCheck="false"
+            readOnly={readOnly}
+          />
+        ) : (
+          <pre className="whitespace-pre overflow-x-auto">{jsonString}</pre>
         )}
-        defaultCollapsed={defaultCollapsed}
-        onCollapseChange={(collapsed) => setIsCollapsed(collapsed)}
-      >
-        <div className="relative h-full">
-          <button
-            onClick={handleCopy}
-            className="absolute right-2 top-2 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-          >
-            {copied ? (
-              <Check className="h-4 w-4 text-green-500" />
-            ) : (
-              <Copy className="h-4 w-4" />
-            )}
-          </button>
-          <pre className={cn(
-            "bg-white dark:bg-slate-800 p-4 rounded-md overflow-auto text-sm font-mono text-slate-900 dark:text-slate-100 shadow-inner",
-            isInSidePanel && "min-h-[400px] max-h-[calc(100vh-300px)]"
-          )}>
-            {JSON.stringify(jsonData, null, 2)}
-          </pre>
-        </div>
-      </CollapsibleSection>
+      </div>
     </div>
   );
 } 
