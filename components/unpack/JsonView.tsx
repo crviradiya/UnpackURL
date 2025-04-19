@@ -75,7 +75,7 @@ export function JsonView({ analysis, className }: JsonViewProps) {
     <div className="space-y-2">
       <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Query Params as JSON</h3>
       <div className="bg-slate-900 rounded-lg p-4">
-        <pre className="font-mono text-sm text-slate-100 whitespace-pre-wrap">
+        <pre className="font-mono text-sm text-slate-100 whitespace-pre-wrap overflow-x-auto break-all">
           {renderJsonValue(jsonData)}
         </pre>
       </div>

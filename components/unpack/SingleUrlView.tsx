@@ -135,7 +135,7 @@ export function SingleUrlView({
               data={jsonViewData} 
               isEditable={true}
               onChange={handleJsonChange}
-              className="h-full"
+              className="h-full bg-slate-900 rounded-lg p-4 text-slate-100"
             />
           </div>
         )}

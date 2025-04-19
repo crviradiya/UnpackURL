@@ -145,7 +145,7 @@ export function UrlInput({
       </form>
 
       {reconstructedUrl && (
-        <div className="bg-white dark:bg-zinc-800 shadow-sm border border-zinc-200 dark:border-zinc-700 rounded-lg p-5">
+        <div className="bg-white dark:bg-slate-950 light:bg-slate-550 shadow-sm border border-slate-200 dark:border-slate-700 rounded-lg p-5">
           <div className="flex items-center justify-between mb-3">
             <div className="text-sm font-medium">
               {isEncoded ? "Encoded URL" : "Reconstructed URL"}
@@ -177,7 +177,7 @@ export function UrlInput({
               />
             </div>
           </div>
-          <div className="font-mono text-sm p-3 bg-zinc-50 dark:bg-zinc-900 rounded border border-zinc-200 dark:border-zinc-700 break-all">
+          <div className="font-mono text-sm p-3 bg-slate-900 dark:bg-slate-900 rounded border border-zinc-200 dark:border-zinc-700 break-all text-white dark:text-white">
             {displayedUrl}
           </div>
         </div>

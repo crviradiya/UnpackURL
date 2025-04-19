@@ -15,7 +15,7 @@ export function ModeToggle({ mode, onModeChange }: ModeToggleProps) {
         variant={mode === "single" ? "default" : "ghost"}
         size="sm"
         onClick={() => onModeChange("single")}
-        className="flex-1"
+        className={`flex-1 ${mode === "single" ? "font-bold" : ""}`}
       >
         Single URL
       </Button>
@@ -23,7 +23,7 @@ export function ModeToggle({ mode, onModeChange }: ModeToggleProps) {
         variant={mode === "compare" ? "default" : "ghost"}
         size="sm"
         onClick={() => onModeChange("compare")}
-        className="flex-1"
+        className={`flex-1 ${mode === "compare" ? "font-bold" : ""}`}
       >
         Compare URLs
       </Button>
