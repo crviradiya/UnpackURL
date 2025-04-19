@@ -9,9 +9,56 @@ import { Toaster } from 'sonner';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "UnpackURL",
-  description: "Unpack and analyze URLs with ease",
+  title: {
+    default: "UnpackURL - URL Analysis and Unpacking Tool",
+    template: "%s | UnpackURL"
+  },
+  description: "Unpack and analyze URLs with ease. Get detailed insights, metadata, and security information for any URL instantly.",
+  keywords: ["URL analysis", "URL unpacking", "URL metadata", "URL security", "URL inspection", "web analysis tool"],
+  authors: [{ name: "UnpackURL Team" }],
+  creator: "UnpackURL",
+  publisher: "UnpackURL",
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    title: "UnpackURL - URL Analysis and Unpacking Tool",
+    description: "Unpack and analyze URLs with ease. Get detailed insights, metadata, and security information for any URL instantly.",
+    siteName: "UnpackURL",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "UnpackURL - URL Analysis Tool",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "UnpackURL - URL Analysis and Unpacking Tool",
+    description: "Unpack and analyze URLs with ease. Get detailed insights, metadata, and security information for any URL instantly.",
+    images: ["/og-image.png"],
+    creator: "@unpackurl",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+  },
 };
 
 export default function RootLayout({
