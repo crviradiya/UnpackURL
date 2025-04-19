@@ -20,6 +20,7 @@ export function UrlParser() {
   const [isLoading, setIsLoading] = useState(false);
 
   // Use useCallback to memoize the handleUrlAnalysis function
+  // Remove comparison from dependencies to avoid infinite loop
   const handleUrlAnalysis = useCallback((inputUrl: string) => {
     setIsLoading(true);
     try {
@@ -32,24 +33,21 @@ export function UrlParser() {
       if (mode === "single") {
         setAnalysis(result);
       } else {
-        // In compare mode, set the left URL if it's empty, otherwise set the right URL
-        if (!comparison.left) {
-          setComparison({
-            ...comparison,
-            left: result
-          });
-        } else if (!comparison.right) {
-          setComparison({
-            ...comparison,
-            right: result
-          });
-        } else {
-          // If both URLs are set, update the left URL
-          setComparison({
-            left: result,
-            right: comparison.right
-          });
-        }
+        // In compare mode, handle URL placement without creating dependency on comparison
+        setComparison(prevComparison => {
+          // If left is empty, put it there
+          if (!prevComparison.left) {
+            return { ...prevComparison, left: result };
+          } 
+          // If right is empty, put it there
+          else if (!prevComparison.right) {
+            return { ...prevComparison, right: result };
+          } 
+          // If both are filled, update left
+          else {
+            return { ...prevComparison, left: result };
+          }
+        });
       }
       
       // Track analytics
@@ -57,12 +55,12 @@ export function UrlParser() {
       
       // Update URL hash for sharing
       window.location.hash = encodeURIComponent(inputUrl);
-    } catch (error) {
+    } catch (_) {
       toast.error("Please enter a valid URL");
     } finally {
       setIsLoading(false);
     }
-  }, [mode, comparison]);
+  }, [mode]); // Only depend on mode, not comparison
 
   useEffect(() => {
     // Check if there's a URL in the hash
@@ -86,17 +84,20 @@ export function UrlParser() {
   };
 
   const handleModeChange = (newMode: ViewMode) => {
-    if (newMode === "compare" && mode === "single" && analysis) {
-      // When switching from single to compare, pre-fill the first comparison slot
-      setComparison({
-        ...comparison,
-        left: analysis
-      });
-    } else if (newMode === "single" && mode === "compare" && comparison.left) {
-      // When switching from compare to single, use the left comparison URL
-      setAnalysis(comparison.left);
+    if (newMode !== mode) {
+      if (newMode === "compare" && mode === "single" && analysis) {
+        // When switching to compare mode, set comparison first, then update mode
+        setComparison({
+          left: analysis,
+          right: null
+        });
+      } else if (newMode === "single" && mode === "compare" && comparison.left) {
+        // When switching to single mode, set analysis first, then update mode
+        setAnalysis(comparison.left);
+      }
+      // Always update the mode last to prevent cascading updates
+      setMode(newMode);
     }
-    setMode(newMode);
   };
 
   return (
