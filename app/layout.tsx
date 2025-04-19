@@ -69,7 +69,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="application-name" content="UnpackURL" />
@@ -112,10 +112,13 @@ export default function RootLayout({
           />
         </noscript>
         
+        {/* Premium gradient background */}
+        <div className="gradient-bg"></div>
+        
         <ThemeProvider defaultTheme="dark">
           <div className="relative flex min-h-screen flex-col">
             <Navbar />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 w-full">{children}</main>
             <Footer />
           </div>
           <Toaster richColors closeButton theme="dark" />

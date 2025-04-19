@@ -85,6 +85,16 @@ export function UrlParser() {
   };
 
   const handleModeChange = (newMode: ViewMode) => {
+    if (newMode === "compare" && mode === "single" && analysis) {
+      // When switching from single to compare, pre-fill the first comparison slot
+      setComparison({
+        ...comparison,
+        left: analysis
+      });
+    } else if (newMode === "single" && mode === "compare" && comparison.left) {
+      // When switching from compare to single, use the left comparison URL
+      setAnalysis(comparison.left);
+    }
     setMode(newMode);
   };
 
@@ -101,7 +111,7 @@ export function UrlParser() {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto space-y-6">
+    <div className="w-full mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">URL Parser</h2>
         <ModeToggle mode={mode} onModeChange={handleModeChange} />
