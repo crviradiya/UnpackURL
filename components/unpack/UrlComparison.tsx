@@ -1,15 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/Button";
 import { ArrowLeftRight } from "lucide-react";
 import { UrlAnalysis, UrlComparison as UrlComparisonType } from "@/types";
 import { UrlInput } from "./UrlInput";
 import { UrlComponents } from "./UrlComponents";
 import { QueryParameters } from "./QueryParameters";
-import { JsonView } from "@/components/ui/JsonView";
+import { JsonView } from "./JsonView";
 import { reconstructUrl } from "@/lib/urlUtils";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/Button";
 
 interface UrlComparisonProps {
   comparison: UrlComparisonType;

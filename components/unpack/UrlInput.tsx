@@ -129,7 +129,7 @@ export function UrlInput({
           <Button
             type="submit"
             disabled={isLoading}
-            className="absolute right-1 top-1 bottom-1 btn-premium"
+            className="absolute right-1 top-1 bottom-1 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:from-primary/90 hover:to-accent/90"
             size="sm"
           >
             {isLoading ? (
@@ -145,7 +145,7 @@ export function UrlInput({
       </form>
 
       {reconstructedUrl && (
-        <div className="card">
+        <div className="bg-white dark:bg-zinc-800 shadow-sm border border-zinc-200 dark:border-zinc-700 rounded-lg p-5">
           <div className="flex items-center justify-between mb-3">
             <div className="text-sm font-medium">
               {isEncoded ? "Encoded URL" : "Reconstructed URL"}
@@ -177,7 +177,7 @@ export function UrlInput({
               />
             </div>
           </div>
-          <div className="font-mono text-sm p-3 bg-background rounded border border-border break-all">
+          <div className="font-mono text-sm p-3 bg-zinc-50 dark:bg-zinc-900 rounded border border-zinc-200 dark:border-zinc-700 break-all">
             {displayedUrl}
           </div>
         </div>

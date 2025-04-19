@@ -60,20 +60,35 @@ export function SingleUrlView({
     // try to update the analysis
     if (newData && analysis) {
       try {
-        const updatedAnalysis = { ...analysis };
+        // Create a deep clone of the analysis to avoid reference issues
+        const updatedAnalysis = { 
+          ...JSON.parse(JSON.stringify(analysis)),
+          parametersUpdated: true // Flag to force UI updates
+        };
         
         // Update the parsed URL components if they exist in the JSON
-        if (newData.protocol) updatedAnalysis.parsedUrl.protocol = newData.protocol;
-        if (newData.host) updatedAnalysis.parsedUrl.hostname = newData.host;
-        if (newData.port) updatedAnalysis.parsedUrl.port = newData.port;
-        if (newData.path) updatedAnalysis.parsedUrl.pathname = newData.path;
+        if (newData.protocol !== undefined) updatedAnalysis.parsedUrl.protocol = newData.protocol;
+        if (newData.host !== undefined) updatedAnalysis.parsedUrl.hostname = newData.host;
+        if (newData.port !== undefined) updatedAnalysis.parsedUrl.port = newData.port;
+        if (newData.path !== undefined) updatedAnalysis.parsedUrl.pathname = newData.path;
         
-        // Update query parameters if they exist
-        if (newData.query) updatedAnalysis.parameters = newData.query;
+        // Update query parameters if they exist, ensuring proper deep update
+        if (newData.query !== undefined) {
+          updatedAnalysis.parameters = { ...newData.query };
+          
+          // Ensure proper flags are set to trigger UI updates
+          updatedAnalysis.isValid = true;
+          
+          // Reconstruct the original URL to maintain consistency
+          const newUrl = reconstructUrl(updatedAnalysis);
+          updatedAnalysis.originalUrl = newUrl;
+        }
         
+        // Trigger the change
         onAnalysisChange(updatedAnalysis);
       } catch (error) {
         console.error("Failed to update analysis from JSON", error);
+        toast.error("Failed to update from JSON");
       }
     }
   };

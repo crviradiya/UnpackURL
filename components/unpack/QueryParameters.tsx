@@ -23,9 +23,10 @@ export function QueryParameters({
   nestingLevel = 0,
   parentKey = "",
 }: QueryParametersProps) {
-  const [params, setParams] = useState<Record<string, string>>(
-    analysis.parameters
-  );
+  // Use analysis.parameters directly instead of keeping a separate state
+  // This ensures we always reflect the latest state from props
+  const params = analysis.parameters || {};
+  
   const [newParamKey, setNewParamKey] = useState("");
   const [newParamValue, setNewParamValue] = useState("");
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -76,7 +77,6 @@ export function QueryParameters({
       [newParamKey]: newParamValue,
     };
 
-    setParams(updatedParams);
     setNewParamKey("");
     setNewParamValue("");
     setShowAddParam(false);
@@ -101,7 +101,6 @@ export function QueryParameters({
   const handleDeleteParam = (key: string) => {
     const updatedParams = { ...params };
     delete updatedParams[key];
-    setParams(updatedParams);
 
     // Update the analysis object
     const updatedAnalysis = { ...analysis };
@@ -125,8 +124,6 @@ export function QueryParameters({
       ...params,
       [key]: value,
     };
-
-    setParams(updatedParams);
 
     // Update the analysis object
     const updatedAnalysis = { ...analysis };
@@ -303,9 +300,15 @@ export function QueryParameters({
         {showJsonForParam[paramKey] && (
           <div className="mt-2">
             <JsonView
-              analysis={nestedAnalysis}
+              data={nestedAnalysis ? {
+                protocol: nestedAnalysis.parsedUrl.protocol,
+                host: nestedAnalysis.parsedUrl.hostname,
+                port: nestedAnalysis.parsedUrl.port,
+                path: nestedAnalysis.parsedUrl.pathname,
+                query: nestedAnalysis.parameters,
+              } : {}}
               className="mt-4"
-              defaultCollapsed={false}
+              isEditable={false}
             />
           </div>
         )}

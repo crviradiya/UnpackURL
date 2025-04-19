@@ -72,14 +72,13 @@ export function JsonView({
         />
       </div>
       
-      <div className={`json-view relative ${!isValid && isEditable ? 'border-destructive' : ''}`}>
+      <div className={`json-view relative ${!isValid && isEditable ? 'border border-destructive' : 'border border-zinc-200 dark:border-zinc-700'}`}>
         {isEditable ? (
           <textarea
             ref={textareaRef}
             value={jsonString}
             onChange={handleChange}
-            className="w-full bg-transparent resize-none font-mono text-sm p-0 border-0 focus:ring-0 focus:outline-none"
-            rows={jsonString.split('\n').length}
+            className="w-full h-full min-h-[200px] bg-transparent resize-none font-mono text-sm p-0 border-0 focus:ring-0 focus:outline-none"
             spellCheck="false"
             readOnly={readOnly}
           />

@@ -124,3 +124,44 @@ body {
   color: hsl(var(--foreground));
   font-family: var(--font-inter, Arial, Helvetica, sans-serif);
 }
+
+/* Enhanced component styling */
+.input-container {
+  @apply rounded-md overflow-hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.dark .input-container {
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+
+input, textarea, select {
+  @apply bg-background text-foreground;
+}
+
+/* Card styling improvements */
+.card {
+  @apply  border rounded-lg p-5;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.dark .card {
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* JSON view enhancements */
+.json-view {
+  @apply p-4 rounded-md text-foreground font-mono text-sm;
+  overflow-x: auto;
+}
+
+/* Premium button styles */
+.btn-premium {
+  @apply bg-gradient-to-r font-medium;
+  transition: all 0.3s ease;
+}
+
+/* Focus styles */
+:focus-visible {
+  @apply outline-none ring-2  ring-offset-1 ring-offset-background;
+}
