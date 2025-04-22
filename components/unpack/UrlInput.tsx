@@ -156,7 +156,7 @@ export function UrlInput({
                 className="flex items-center gap-1"
               >
                 <Code className="h-4 w-4" />
-                {isEncoded ? 'Decode' : 'Encode'}
+                <span className="hidden sm:inline">{isEncoded ? 'Decode' : 'Encode'}</span>
               </Button>
               <Button
                 variant="outline"
@@ -165,13 +165,22 @@ export function UrlInput({
                 className="flex items-center gap-1"
               >
                 <RefreshCw className="h-4 w-4" />
-                Reset
+                <span className="hidden sm:inline">Reset</span>
               </Button>
               <CopyButton
                 text={displayedUrl}
                 size="sm"
                 variant="outline"
                 label="Copy"
+                showText={false}
+                className="sm:hidden"
+              />
+              <CopyButton
+                text={displayedUrl}
+                size="sm"
+                variant="outline"
+                label="Copy"
+                className="hidden sm:flex"
               />
             </div>
           </div>
