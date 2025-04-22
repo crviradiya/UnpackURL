@@ -29,6 +29,11 @@ export function UrlInput({
   const [isEncoded, setIsEncoded] = useState(false);
   const [displayedUrl, setDisplayedUrl] = useState(reconstructedUrl);
 
+  // Update input URL when initialUrl prop changes
+  useEffect(() => {
+    setUrl(initialUrl);
+  }, [initialUrl]);
+
   // Update displayed URL when reconstructedUrl changes
   useEffect(() => {
     if (!isEncoded) {
@@ -81,35 +86,14 @@ export function UrlInput({
   };
 
   const handleReset = () => {
-    // Keep the current URL in the input
-    const currentUrl = url;
-    
+    // Clear the URL input
+    setUrl("");
     // Reset encoded state
     setIsEncoded(false);
-    
-    // Call parent's onReset function
+    // Clear displayed URL
+    setDisplayedUrl("");
+    // Call parent's reset
     onReset();
-    
-    // If there's a URL in the input, re-analyze it to update the reconstructed URL
-    if (currentUrl.trim()) {
-      try {
-        // Re-parse the URL to update the reconstructed version
-        const result = parseUrl(currentUrl);
-        onAnalysisChange(result);
-        
-        // Update displayed URL to match the newly reconstructed URL
-        setDisplayedUrl(reconstructUrl(result));
-        
-        toast.success('URL components reset');
-      } catch (_) {
-        // If invalid URL, just clear everything
-        setUrl("");
-        toast.error('Invalid URL, cleared input');
-      }
-    } else {
-      // If no URL, show a different message
-      toast.success('URL Reset');
-    }
   };
 
   return (

@@ -10,6 +10,19 @@ import { ModeToggle } from "./ModeToggle";
 import { SingleUrlView } from "./SingleUrlView";
 import { UrlComparison as UrlComparisonView } from "./UrlComparison";
 
+// Create a global reset function that can be called from anywhere
+let globalReset: (() => void) | null = null;
+
+export function setGlobalReset(resetFn: () => void) {
+  globalReset = resetFn;
+}
+
+export function resetUrlParser() {
+  if (globalReset) {
+    globalReset();
+  }
+}
+
 export function UrlParser() {
   const [mode, setMode] = useState<ViewMode>("single");
   const [analysis, setAnalysis] = useState<UrlAnalysis | null>(null);
@@ -19,8 +32,22 @@ export function UrlParser() {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  // Use useCallback to memoize the handleUrlAnalysis function
-  // Remove comparison from dependencies to avoid infinite loop
+  // Register the reset function when the component mounts
+  useEffect(() => {
+    const resetStates = () => {
+      setAnalysis(null);
+      setComparison({ left: null, right: null });
+      setMode("single");
+      // Clear URL hash
+      if (window.location.hash) {
+        window.history.pushState("", document.title, window.location.pathname + window.location.search);
+      }
+    };
+
+    setGlobalReset(resetStates);
+    return () => setGlobalReset(() => {}); // Cleanup on unmount
+  }, []);
+
   const handleUrlAnalysis = useCallback((inputUrl: string) => {
     setIsLoading(true);
     try {
@@ -68,12 +95,34 @@ export function UrlParser() {
     if (hash) {
       try {
         const decodedUrl = decodeURIComponent(hash);
-        handleUrlAnalysis(decodedUrl);
+        setIsLoading(true);
+        
+        // Validate and parse URL
+        urlSchema.parse({ url: decodedUrl });
+        const result = parseUrl(decodedUrl);
+        
+        // Update state based on mode
+        if (mode === "single") {
+          setAnalysis(result);
+        } else {
+          setComparison(prev => {
+            if (!prev.left) return { ...prev, left: result };
+            if (!prev.right) return { ...prev, right: result };
+            return { ...prev, left: result };
+          });
+        }
+        
+        // Track analytics
+        trackUrlAnalysis(decodedUrl, result.isValid);
       } catch (error) {
         console.error("Error decoding URL from hash:", error);
+        // Clear invalid hash
+        window.history.pushState("", document.title, window.location.pathname + window.location.search);
+      } finally {
+        setIsLoading(false);
       }
     }
-  }, [handleUrlAnalysis]);
+  }, [mode]);  // Only depend on mode since we want this to run once per mode change
 
   const handleAnalysisChange = (updatedAnalysis: UrlAnalysis) => {
     setAnalysis(updatedAnalysis);
@@ -122,4 +171,4 @@ export function UrlParser() {
       )}
     </div>
   );
-} 
+}
