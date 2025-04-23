@@ -54,6 +54,14 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      opacity: {
+        "15": "0.15",
+        "30": "0.30",
+        "40": "0.40",
+        "50": "0.50",
+        "80": "0.80",
+        "90": "0.90",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -76,4 +84,4 @@ const config: Config = {
     },
   },
   plugins: [require("@tailwindcss/forms")],
-} 
+}

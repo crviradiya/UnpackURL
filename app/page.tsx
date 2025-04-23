@@ -22,7 +22,7 @@ export default function Home() {
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
             <span className="bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">Unpack</span> URLs with Precision
           </h1>
-          <p className="text-xl text-gray-400 mb-8">
+          <p className="text-xl text-theme mb-8">
             Decode, analyze, and edit URL query parameters with the most powerful URL inspection tool for developers and web professionals.
           </p>
           <div className="flex flex-col gap-4 sm:flex-row justify-center mb-12">
@@ -47,56 +47,56 @@ export default function Home() {
               <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
                 Powerful URL Analysis Features
               </h2>
-              <p className="mt-4 text-xl text-gray-400">
+              <p className="mt-4 text-xl text-theme">
                 Everything you need to decode, inspect, and manipulate URLs
               </p>
             </div>
             
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {/* Feature 1 */}
-              <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+              <div className="bg-card-theme backdrop-blur-sm rounded-lg p-6 border border-gray-700">
                 <h3 className="text-xl font-semibold mb-3">Complete URL Parsing</h3>
-                <p className="text-gray-400">
+                <p className="text-theme">
                   Instantly break down any URL into its components: protocol, hostname, port, path, and query parameters.
                 </p>
               </div>
               
               {/* Feature 2 */}
-              <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+              <div className="bg-card-theme backdrop-blur-sm rounded-lg p-6 border border-gray-700">
                 <h3 className="text-xl font-semibold mb-3">Edit Query Parameters</h3>
-                <p className="text-gray-400">
+                <p className="text-theme">
                   Modify any URL parameter with ease. Add, edit, or delete parameters and see results in real-time.
                 </p>
               </div>
               
               {/* Feature 3 */}
-              <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+              <div className="bg-card-theme backdrop-blur-sm rounded-lg p-6 border border-gray-700">
                 <h3 className="text-xl font-semibold mb-3">Compare URLs</h3>
-                <p className="text-gray-400">
+                <p className="text-theme">
                   Side-by-side URL comparison helps you spot differences in structure and parameters quickly.
                 </p>
               </div>
               
               {/* Feature 4 */}
-              <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+              <div className="bg-card-theme backdrop-blur-sm rounded-lg p-6 border border-gray-700">
                 <h3 className="text-xl font-semibold mb-3">Nested URL Handling</h3>
-                <p className="text-gray-400">
+                <p className="text-theme">
                   Decode URLs inside query parameters with recursive parsing for complete visibility.
                 </p>
               </div>
               
               {/* Feature 5 */}
-              <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+              <div className="bg-card-theme backdrop-blur-sm rounded-lg p-6 border border-gray-700">
                 <h3 className="text-xl font-semibold mb-3">JSON Format View</h3>
-                <p className="text-gray-400">
+                <p className="text-theme">
                   See the complete URL structure in clean JSON format for easy understanding and debugging.
                 </p>
               </div>
               
               {/* Feature 6 */}
-              <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+              <div className="bg-card-theme backdrop-blur-sm rounded-lg p-6 border border-gray-700">
                 <h3 className="text-xl font-semibold mb-3">Privacy-First Design</h3>
-                <p className="text-gray-400">
+                <p className="text-theme">
                   All processing happens in your browser. Your URL data never leaves your device.
                 </p>
               </div>
@@ -111,7 +111,7 @@ export default function Home() {
               <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
                 How to Decode URLs with UnpackURL
               </h2>
-              <p className="mt-4 text-xl text-gray-400">
+              <p className="mt-4 text-xl text-theme">
                 Simple steps to analyze any URL
               </p>
             </div>
@@ -123,7 +123,7 @@ export default function Home() {
                   <span className="text-2xl font-bold text-blue-400">1</span>
                 </div>
                 <h3 className="text-xl font-medium mb-2">Paste Your URL</h3>
-                <p className="text-gray-400">
+                <p className="text-theme">
                   Enter or paste any URL into the input field at the top of the tool.
                 </p>
               </div>
@@ -134,7 +134,7 @@ export default function Home() {
                   <span className="text-2xl font-bold text-purple-400">2</span>
                 </div>
                 <h3 className="text-xl font-medium mb-2">View Components</h3>
-                <p className="text-gray-400">
+                <p className="text-theme">
                   See the URL broken down into protocol, host, path, and parameters.
                 </p>
               </div>
@@ -145,7 +145,7 @@ export default function Home() {
                   <span className="text-2xl font-bold text-pink-400">3</span>
                 </div>
                 <h3 className="text-xl font-medium mb-2">Edit Parameters</h3>
-                <p className="text-gray-400">
+                <p className="text-theme">
                   Modify any part of the URL with our intuitive editor interface.
                 </p>
               </div>
@@ -156,7 +156,7 @@ export default function Home() {
                   <span className="text-2xl font-bold text-green-400">4</span>
                 </div>
                 <h3 className="text-xl font-medium mb-2">Copy New URL</h3>
-                <p className="text-gray-400">
+                <p className="text-theme">
                   Click the copy button to use your modified URL anywhere.
                 </p>
               </div>
@@ -175,41 +175,41 @@ export default function Home() {
             
             <div className="space-y-8">
               {/* FAQ Item 1 */}
-              <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+              <div className="bg-card-theme backdrop-blur-sm rounded-lg p-6 border border-gray-700">
                 <h3 className="text-xl font-semibold mb-2">What is UnpackURL?</h3>
-                <p className="text-gray-400">
+                <p className="text-theme">
                   UnpackURL is a developer-friendly web tool designed to decode, parse, edit, and compare URL query parameters with precision and ease. It helps you understand and manipulate complex URLs without any hassle.
                 </p>
               </div>
               
               {/* FAQ Item 2 */}
-              <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+              <div className="bg-card-theme backdrop-blur-sm rounded-lg p-6 border border-gray-700">
                 <h3 className="text-xl font-semibold mb-2">How do I analyze a URL with UnpackURL?</h3>
-                <p className="text-gray-400">
+                <p className="text-theme">
                   Simply paste your URL into the input field at the top of the page. UnpackURL will automatically parse and display all components, including protocol, host, path, and query parameters in an easy-to-understand format.
                 </p>
               </div>
               
               {/* FAQ Item 3 */}
-              <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+              <div className="bg-card-theme backdrop-blur-sm rounded-lg p-6 border border-gray-700">
                 <h3 className="text-xl font-semibold mb-2">Can I edit URL parameters with UnpackURL?</h3>
-                <p className="text-gray-400">
+                <p className="text-theme">
                   Yes! UnpackURL allows you to edit any URL component, including query parameters. Changes update in real-time, and you can copy the new URL with a single click.
                 </p>
               </div>
               
               {/* FAQ Item 4 */}
-              <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+              <div className="bg-card-theme backdrop-blur-sm rounded-lg p-6 border border-gray-700">
                 <h3 className="text-xl font-semibold mb-2">Does UnpackURL support comparing multiple URLs?</h3>
-                <p className="text-gray-400">
+                <p className="text-theme">
                   Absolutely! Use the Compare mode to analyze two URLs side-by-side and identify differences in their structure and parameters.
                 </p>
               </div>
               
               {/* FAQ Item 5 */}
-              <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+              <div className="bg-card-theme backdrop-blur-sm rounded-lg p-6 border border-gray-700">
                 <h3 className="text-xl font-semibold mb-2">Is UnpackURL free to use?</h3>
-                <p className="text-gray-400">
+                <p className="text-theme">
                   Yes, UnpackURL is completely free to use with no limitations. No account or registration required.
                 </p>
               </div>
