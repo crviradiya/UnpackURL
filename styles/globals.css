@@ -166,7 +166,7 @@ input, textarea, select {
   @apply outline-none ring-2  ring-offset-1 ring-offset-background;
 }
 
-/* Custom theme background classes */
+/* Custom theme classes */
 .bg-card-theme {
   background-color: rgba(209, 213, 219, 0.5); /* gray-300/50 for light mode */
 }
@@ -177,7 +177,7 @@ input, textarea, select {
 
 /* JSONView and Reconstructed URL specific theme */
 .bg-code-theme {
-  background-color: rgb(241, 237, 255); /* bg-slate-950 for dark mode */
+  background-color: rgb(211, 216, 255);
 }
 
 .dark .bg-code-theme {
@@ -185,7 +185,7 @@ input, textarea, select {
 }
 
 .bg-sub-code-theme {
-  background-color: rgb(251, 252, 255); /* bg-slate-950 for dark mode */
+  background-color: rgb(248, 245, 255);
 }
 
 .dark .bg-sub-code-theme {
@@ -207,4 +207,54 @@ input, textarea, select {
 
 .dark .text-theme {
   color: rgb(156, 163, 175); /* gray-400 for dark mode */
+}
+
+/* Parameter color classes for QueryParameters component */
+.bg-param-blue {
+  background-color: rgb(239, 246, 255); /* bg-blue-50 */
+  border-color: rgb(191, 219, 254); /* border-blue-200 */
+}
+.dark .bg-param-blue {
+  background-color: rgba(30, 58, 138, 0.2); /* bg-blue-900/20 */
+  border-color: rgb(30, 64, 175); /* border-blue-800 */
+}
+
+.bg-param-green {
+  background-color: rgba(207, 219, 211, 0.2); /* bg-green-900/20 */
+  border-color: rgb(127, 213, 160); /* border-green-800 */
+}
+
+.dark .bg-param-green {
+  background-color: rgba(20, 83, 45, 0.2); /* bg-green-900/20 */
+  border-color: rgb(22, 101, 52); /* border-green-800 */
+}
+
+.bg-param-purple {
+  background-color: rgb(245, 243, 255); /* bg-purple-50 */
+  border-color: rgb(233, 213, 255); /* border-purple-200 */
+}
+
+.dark .bg-param-purple {
+  background-color: rgba(88, 28, 135, 0.2); /* bg-purple-900/20 */
+  border-color: rgb(107, 33, 168); /* border-purple-800 */
+}
+
+.bg-param-amber {
+  background-color: rgb(255, 251, 235); /* bg-amber-50 */
+  border-color: rgb(253, 230, 138); /* border-amber-200 */
+}
+
+.dark .bg-param-amber {
+  background-color: rgba(120, 53, 15, 0.2); /* bg-amber-900/20 */
+  border-color: rgb(146, 64, 14); /* border-amber-800 */
+}
+
+.bg-param-rose {
+  background-color: rgb(255, 241, 242); /* bg-rose-50 */
+  border-color: rgb(254, 205, 211); /* border-rose-200 */
+}
+
+.dark .bg-param-rose {
+  background-color: rgba(136, 19, 55, 0.2); /* bg-rose-900/20 */
+  border-color: rgb(159, 18, 57); /* border-rose-800 */
 }

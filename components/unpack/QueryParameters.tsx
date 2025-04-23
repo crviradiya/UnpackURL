@@ -25,7 +25,7 @@ export function QueryParameters({
   // Use analysis.parameters directly instead of keeping a separate state
   // This ensures we always reflect the latest state from props
   const params = analysis.parameters || {};
-  
+
   const [newParamKey, setNewParamKey] = useState("");
   const [newParamValue, setNewParamValue] = useState("");
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -39,7 +39,7 @@ export function QueryParameters({
 
   // Create a nesting label that shows the path of nested parameters
   const nestingLabel =
-    nestingLevel > 0
+    nestingLevel > -1
       ? `Nested Parameters ${parentKey ? `(${parentKey})` : ""}`
       : "Query Parameters";
 
@@ -158,11 +158,11 @@ export function QueryParameters({
   // Determine border and background colors based on nesting level
   const getLevelColor = () => {
     const colors = [
-      "border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20",
-      "border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20",
-      "border-purple-200 dark:border-purple-800 bg-purple-50 dark:bg-purple-900/20",
-      "border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-900/20",
-      "border-rose-200 dark:border-rose-800 bg-rose-50 dark:bg-rose-900/20",
+      "bg-param-blue",
+      "bg-param-green",
+      "bg-param-purple",
+      "bg-param-amber",
+      "bg-param-rose",
     ];
     return colors[nestingLevel % colors.length];
   };
@@ -182,7 +182,12 @@ export function QueryParameters({
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between mb-2">
-          <div className="text-sm font-medium text-blue-600 dark:text-blue-400 flex items-center">
+          <div
+            className={cn(
+              "text-sm font-medium flex items-center",
+              nestingLevel > -1 && getLevelColor()
+            )}
+          >
             <Link className="h-4 w-4 mr-1.5" />
             Nested URL Components
           </div>
@@ -282,7 +287,7 @@ export function QueryParameters({
         </div>
 
         {Object.keys(nestedAnalysis.parameters).length > 0 && (
-          <div className="mt-4 bg-white dark:bg-slate-900 rounded-md border border-slate-200 dark:border-slate-700 overflow-hidden">
+          <div className="mt-4 overflow-hidden">
             <QueryParameters
               analysis={nestedAnalysis}
               onUpdate={(updatedNestedAnalysis) => {
@@ -299,13 +304,17 @@ export function QueryParameters({
         {showJsonForParam[paramKey] && (
           <div className="mt-2">
             <JsonView
-              data={nestedAnalysis ? {
-                protocol: nestedAnalysis.parsedUrl.protocol,
-                host: nestedAnalysis.parsedUrl.hostname,
-                port: nestedAnalysis.parsedUrl.port,
-                path: nestedAnalysis.parsedUrl.pathname,
-                query: nestedAnalysis.parameters,
-              } : {}}
+              data={
+                nestedAnalysis
+                  ? {
+                      protocol: nestedAnalysis.parsedUrl.protocol,
+                      host: nestedAnalysis.parsedUrl.hostname,
+                      port: nestedAnalysis.parsedUrl.port,
+                      path: nestedAnalysis.parsedUrl.pathname,
+                      query: nestedAnalysis.parameters,
+                    }
+                  : {}
+              }
               className="mt-4"
               isEditable={false}
             />
@@ -319,15 +328,10 @@ export function QueryParameters({
     <div
       className={cn(
         "space-y-4",
-        nestingLevel > 0 && "rounded-md overflow-hidden"
+        nestingLevel > -1 && "rounded-md overflow-hidden"
       )}
     >
-      <div
-        className={cn(
-          "flex items-center justify-between",
-          nestingLevel > 0 && getLevelColor()
-        )}
-      >
+      <div className={"flex items-center justify-between"}>
         <div className="flex items-center">
           <div className="relative">
             <button
@@ -449,15 +453,24 @@ export function QueryParameters({
                       className={cn(
                         "font-mono bg-transparent pr-8",
                         isLikelyUrl(value) &&
-                          "border-blue-300 dark:border-blue-600"
+                          nestingLevel > -1 &&
+                          getLevelColor()
                       )}
                     />
 
                     {isLikelyUrl(value) && (
-                      <div className="absolute right-2 top-2 flex space-x-1">
+                      <div
+                        className={cn(
+                          "absolute right-2 top-2 flex space-x-1",
+                          nestingLevel > -1 && getLevelColor()
+                        )}
+                      >
                         <button
                           onClick={() => toggleNestedUrl(key)}
-                          className="flex items-center justify-center w-5 h-5 rounded bg-blue-100 dark:bg-blue-900 text-blue-500 hover:text-blue-600 dark:hover:text-blue-400"
+                          className={cn(
+                            "flex items-center justify-center w-5 h-5 rounded hover:text-blue-600 dark:hover:text-blue-400",
+                            nestingLevel > -1 && getLevelColor()
+                          )}
                           title={
                             expandedNestedUrls[key]
                               ? "Collapse URL"
@@ -477,7 +490,12 @@ export function QueryParameters({
 
                 {/* Nested URL Analysis (shown when expanded) */}
                 {isLikelyUrl(value) && expandedNestedUrls[key] && (
-                  <div className="mt-3 ml-4 pt-3 border-l-2 border-blue-300 dark:border-blue-600 pl-4">
+                  <div
+                    className={cn(
+                      "mt-3 ml-4 pt-3 border-l-2 pl-4",
+                      nestingLevel > -1 && getLevelColor()
+                    )}
+                  >
                     <NestedUrlComponents paramKey={key} paramValue={value} />
                   </div>
                 )}
