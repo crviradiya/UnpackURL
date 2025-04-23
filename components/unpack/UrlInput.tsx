@@ -111,7 +111,7 @@ export function UrlInput({
           <Button
             type="submit"
             disabled={isLoading}
-            className="absolute right-1 top-1 bottom-1 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:from-primary/90 hover:to-accent/90"
+            className="absolute right-0.5 top-0.5 bottom-0.5 bg-gradient-to-r from-[#2563eb] to-[#9333ea] text-white hover:from-[#2563eb]/90 hover:to-[#9333ea]/90"
             size="sm"
           >
             {isLoading ? (
@@ -127,7 +127,7 @@ export function UrlInput({
       </form>
 
       {reconstructedUrl && (
-        <div className="bg-white dark:bg-slate-950 light:bg-slate-550 shadow-sm border border-slate-200 dark:border-slate-700 rounded-lg p-5">
+        <div className="bg-code-theme backdrop-blur-sm rounded-lg p-5 border border-gray-700">
           <div className="flex items-center justify-between mb-3">
             <div className="text-sm font-medium">
               {isEncoded ? "Encoded URL" : "Reconstructed URL"}
@@ -168,7 +168,7 @@ export function UrlInput({
               />
             </div>
           </div>
-          <div className="font-mono text-sm p-3 bg-slate-900 dark:bg-slate-900 rounded border border-zinc-200 dark:border-zinc-700 break-all text-white dark:text-white">
+          <div className="font-mono text-sm p-3 bg-sub-code-theme rounded border border-gray-700 break-all text-code-theme">
             {displayedUrl}
           </div>
         </div>

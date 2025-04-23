@@ -56,9 +56,9 @@ export function JsonView({
   }, [jsonString]);
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative ${className} bg-code-theme`}>
       <div className="flex justify-between items-center mb-2">
-        <span className="text-sm font-medium text-muted-foreground">
+        <span className="text-sm font-medium text-code-theme">
           {isEditable ? "JSON (Editable)" : "JSON"}
           {!isValid && isEditable && (
             <span className="ml-2 text-destructive">Invalid JSON</span>
@@ -69,21 +69,22 @@ export function JsonView({
           size="sm" 
           variant="ghost" 
           label="Copy JSON"
+          className="text-code-theme"
         />
       </div>
       
-      <div className={`json-view relative ${!isValid && isEditable ? 'border border-destructive' : 'border border-zinc-200 dark:border-zinc-700'}`}>
+      <div className={`json-view relative ${!isValid && isEditable ? 'border border-destructive' : 'border border-zinc-200 dark:border-zinc-700'} bg-sub-code-theme rounded-md p-4`}>
         {isEditable ? (
           <textarea
             ref={textareaRef}
             value={jsonString}
             onChange={handleChange}
-            className="w-full h-full min-h-[200px] bg-transparent resize-none font-mono text-sm p-0 border-0 focus:ring-0 focus:outline-none"
+            className="w-full h-full min-h-[200px] bg-transparent resize-none font-mono text-sm p-0 border-0 focus:ring-0 focus:outline-none text-code-theme"
             spellCheck="false"
             readOnly={readOnly}
           />
         ) : (
-          <pre className="whitespace-pre overflow-x-auto">{jsonString}</pre>
+          <pre className="whitespace-pre overflow-x-auto font-mono text-sm text-code-theme">{jsonString}</pre>
         )}
       </div>
     </div>

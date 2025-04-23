@@ -165,3 +165,46 @@ input, textarea, select {
 :focus-visible {
   @apply outline-none ring-2  ring-offset-1 ring-offset-background;
 }
+
+/* Custom theme background classes */
+.bg-card-theme {
+  background-color: rgba(209, 213, 219, 0.5); /* gray-300/50 for light mode */
+}
+
+.dark .bg-card-theme {
+  background-color: rgba(31, 41, 55, 0.5); /* gray-800/50 for dark mode */
+}
+
+/* JSONView and Reconstructed URL specific theme */
+.bg-code-theme {
+  background-color: rgb(241, 237, 255); /* bg-slate-950 for dark mode */
+}
+
+.dark .bg-code-theme {
+  background-color: rgb(2 6 23); /* bg-slate-950 for dark mode */
+}
+
+.bg-sub-code-theme {
+  background-color: rgb(251, 252, 255); /* bg-slate-950 for dark mode */
+}
+
+.dark .bg-sub-code-theme {
+  background-color: rgb(15 23 42); /* bg-slate-950 for dark mode */
+}
+
+
+.text-code-theme {
+  color: rgb(55, 65, 81); /* gray-700 for light mode */
+}
+
+.dark .text-code-theme {
+  color: rgb(209, 213, 219); /* gray-300 for dark mode */
+}
+
+.text-theme {
+  color: rgb(75, 85, 99); /* gray-600 for light mode */
+}
+
+.dark .text-theme {
+  color: rgb(156, 163, 175); /* gray-400 for dark mode */
+}
